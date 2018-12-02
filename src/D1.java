@@ -1,50 +1,48 @@
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class D1 {
 
-    public static void main(String[] args) throws IOException {
-        long score =0;
-
-        Scanner scanner = new Scanner(new File("inputData/input.in"));
+    public static List<String> loadInputData() throws IOException {
+        Scanner scanner = new Scanner(new File("inputData/inputD1.in"));
         scanner.useDelimiter("\n");
-
-        List<Long> scorelist = new ArrayList<>();
         List<String> inputList = new ArrayList<>();
 
-        scorelist.add(score);
-
-        while(scanner.hasNext()) {
+        while (scanner.hasNext()) {
             String input = scanner.next();
             inputList.add(input);
         }
+        return inputList;
+    }
 
-        for (int i=0; i<inputList.size(); i++){
+    public static int part1(List<String> inputList){
+        int score =0;
+        for(String s : inputList){
+            score += Integer.parseInt(s);
+        }
+        return score;
+    }
 
-            if(inputList.get(i).startsWith("+")){
-                score += Long.parseLong(inputList.get(i));
+    public static int part2(List<String> inputList){
+        int score = 0;
+        List<Integer> scorelist = new ArrayList<>();
+        scorelist.add(score);
+        while(true){
+            for (String s : inputList){
+                score += Integer.parseInt(s);
                 if(scorelist.contains(score)){
-                    System.out.println(score);
-                    break;
+                    return score;
                 }
                 scorelist.add(score);
-            }else{
-                score += Long.parseLong(inputList.get(i));
-                if(scorelist.contains(score)){
-                    System.out.println(score);
-                    break;
-                }
-                scorelist.add(score);
-            }
-            //System.out.println("Score: "+score);
-            if(i==inputList.size()-1){
-                i=-1;
             }
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        System.out.println(part1(loadInputData()));
+        System.out.println(part2(loadInputData()));
     }
 }
